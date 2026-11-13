@@ -6,12 +6,14 @@ function canvas(w,h){const c=document.createElement('canvas');c.width=w;c.height
 function map(c,renderer){const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=renderer.capabilities.getMaxAnisotropy();return t}
 function plaster(renderer){const c=canvas(512,512),x=c.getContext('2d'),r=random(117);x.fillStyle='#817666';x.fillRect(0,0,512,512);for(let i=0;i<26000;i++){x.fillStyle=r()>.5?'#eee5d00b':'#20190d0a';x.fillRect(r()*512,r()*512,1+r()*2,1+r()*2)}return map(c,renderer)}
 function walnut(renderer){const c=canvas(256,1024),x=c.getContext('2d'),r=random(762);x.fillStyle='#473424';x.fillRect(0,0,256,1024);for(let i=0;i<350;i++){const a=r()*256;x.strokeStyle=r()>.4?'#bd966719':'#170e0925';x.lineWidth=.3+r();x.beginPath();x.moveTo(a,0);for(let y=0;y<=1024;y+=24)x.lineTo(a+Math.sin(y*.009+i)*1.8,y);x.stroke()}return map(c,renderer)}
-function oakFloor(renderer){const c=canvas(1024,2048),x=c.getContext('2d'),r=random(811),width=1024*5/ROOM.width,length=2048*60/ROOM.length;for(let i=0;i<Math.ceil(1024/width);i++){const left=i*width;x.fillStyle=['#64503b','#6d5941','#766148','#604c38','#6e5740'][i%5];x.fillRect(left,0,width,2048);x.fillStyle='#251e16';x.fillRect(left,0,.7,2048);for(let y=(i%3)*length/3;y<2048;y+=length){x.fillStyle='#2e251b';x.fillRect(left,y,width,.8)}for(let j=0;j<15;j++){const a=left+r()*width;x.strokeStyle=r()>.5?'#21170e1a':'#d6b98b15';x.lineWidth=.4;x.beginPath();x.moveTo(a,0);for(let y=0;y<=2048;y+=25)x.lineTo(a+Math.sin(y*.008+j)*.6,y);x.stroke()}}return map(c,renderer)}
-function print(renderer,seed){const c=canvas(192,256),x=c.getContext('2d'),r=random(seed);x.fillStyle='#b0ada0';x.fillRect(0,0,192,256);const sky=x.createLinearGradient(0,0,0,256);sky.addColorStop(0,'#c8c6bc');sky.addColorStop(1,'#777b76');x.fillStyle=sky;x.fillRect(0,0,192,256);x.fillStyle='#74756d';x.fillRect(0,193,192,63);for(let i=0;i<9;i++){let bx=i*25-8,by=85+r()*65,bw=22+r()*10;x.fillStyle=['#77796e','#60655e','#8a8a7c'][i%3];x.fillRect(bx,by,bw,193-by);x.beginPath();x.moveTo(bx-2,by);x.lineTo(bx+bw/2,by-15-r()*15);x.lineTo(bx+bw+2,by);x.fill();for(let y=by+10;y<185;y+=17)for(let xx=bx+5;xx<bx+bw-3;xx+=9){x.fillStyle='#353e36';x.fillRect(xx,y,4,7)}}for(let i=0;i<7000;i++){x.fillStyle=r()>.5?'#fff3df06':'#14170d08';x.fillRect(r()*192,r()*256,1,1)}return map(c,renderer)}
+function oakFloor(renderer,stain=2){const c=canvas(1024,2048),x=c.getContext('2d'),r=random(811),width=1024*5/ROOM.width,length=2048*60/ROOM.length;for(let i=0;i<Math.ceil(1024/width);i++){const left=i*width;x.fillStyle=['#64503b','#6d5941','#766148','#604c38','#6e5740'][i%5];x.fillRect(left,0,width,2048);x.fillStyle='#251e16';x.fillRect(left,0,.7,2048);for(let y=(i%3)*length/3;y<2048;y+=length){x.fillStyle='#2e251b';x.fillRect(left,y,width,.8)}for(let j=0;j<15;j++){const a=left+r()*width;x.strokeStyle=r()>.5?'#21170e1a':'#d6b98b15';x.lineWidth=.4;x.beginPath();x.moveTo(a,0);for(let y=0;y<=2048;y+=25)x.lineTo(a+Math.sin(y*.008+j)*.6,y);x.stroke()}}x.globalCompositeOperation='multiply';x.fillStyle=['#fff8e9','#e1d1bb','#bfaa8e','#9a8369','#79634e'][stain];x.fillRect(0,0,1024,2048);return map(c,renderer)}
+function leather(renderer){const c=canvas(256,256),x=c.getContext('2d'),r=random(398);x.fillStyle='#8a2925';x.fillRect(0,0,256,256);for(let i=0;i<14000;i++){x.fillStyle=r()>.5?'#e6a19a15':'#260c0a22';x.fillRect(r()*256,r()*256,.5+r()*1.3,.5+r()*1.3)}return map(c,renderer)}
+// Grayscale in the texture canvas preserves each uploaded photograph in full.
+function photo(renderer,url,onLoad){const c=canvas(1000,750),x=c.getContext('2d');x.fillStyle='#ded9cc';x.fillRect(0,0,c.width,c.height);const texture=map(c,renderer),image=new Image();image.onload=()=>{x.fillStyle='#ded9cc';x.fillRect(0,0,c.width,c.height);const scale=Math.min(c.width/image.width,c.height/image.height),w=image.width*scale,h=image.height*scale;x.drawImage(image,(c.width-w)/2,(c.height-h)/2,w,h);const pixels=x.getImageData(0,0,c.width,c.height);for(let i=0;i<pixels.data.length;i+=4){const gray=Math.round(pixels.data[i]*.2126+pixels.data[i+1]*.7152+pixels.data[i+2]*.0722);pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=gray}x.putImageData(pixels,0,0);texture.needsUpdate=true;onLoad()};image.src=new URL(url,import.meta.url).href;return texture}
 export function addRoom(scene,floor,renderer){
  scene.background=new THREE.Color('#292824');scene.fog=new THREE.FogExp2('#292824',.00045);scene.environment=null;
  delete scene.userData.roomPanorama;delete scene.userData.roomFloor;
- scene.userData.roomDimensions={...ROOM,stoolSeatHeight:30,stoolDiameter:16,frameWidth:18,frameHeight:24,plankWidth:5};
+ scene.userData.roomDimensions={...ROOM,stoolSeatHeight:30,stoolDiameter:16,frameWidth:26,frameHeight:21,plankWidth:5};
  const group=new THREE.Group();group.name='Scaled 18 by 36 foot room';scene.add(group);
  const wood=walnut(renderer),paint=plaster(renderer);
  const plasterMat=new THREE.MeshStandardMaterial({map:paint,roughness:.93,bumpMap:paint,bumpScale:.022});
@@ -33,16 +35,22 @@ export function addRoom(scene,floor,renderer){
   box(1.9,5,ROOM.length,sign*(ROOM.width/2-.95),-25.5,0,trimMat,'Side baseboard',-23);
   for(let z=-204;z<=204;z+=24)box(.7,33,1,sign*(ROOM.width/2-1.7),-10,z,trimMat,'Panel join',-23);
  }
- // Four small framed architectural prints: 18 x 24 inches, at eye level.
+ // Stand frames off the wall; separated front faces avoid depth fighting at distance.
+ let refreshReflections=()=>{};
  for(const [i,x] of [-75,-25,25,75].entries()){
-  const frame=box(18,24,1,x,35,214.8,trimMat,'18 by 24 inch picture frame');
-  box(16,22,.12,x,35,214.22,new THREE.MeshStandardMaterial({color:0xc8c0ab,roughness:.95}),'Picture mat',-19.8);
-  const image=mesh(new THREE.PlaneGeometry(12.6,17.5),new THREE.MeshStandardMaterial({map:print(renderer,42+i*94),roughness:1}),x,35,214.12,'Framed monochrome print',-19.6);image.rotation.y=Math.PI;
+  box(26,21,1.5,x,35,213.75,trimMat,'26 by 21 inch picture frame');
+  box(23.5,18.5,.2,x,35,212.65,new THREE.MeshStandardMaterial({color:0xded9cc,roughness:.95}),'Picture mat',-19.8);
+  const image=mesh(new THREE.PlaneGeometry(21,15.75),new THREE.MeshStandardMaterial({map:photo(renderer,`./photos/boat-${i+1}.jpg`,()=>refreshReflections()),roughness:1}),x,35,212.25,'Framed monochrome boat photograph',-19.6);image.rotation.y=Math.PI;
  }
  // Narrow counter and full-size stools along one side, clear of the table.
  box(15,2,132,97,13,24,panelMat,'42 inch high side counter');
+ const hide=leather(renderer),leatherMat=new THREE.MeshStandardMaterial({map:hide,bumpMap:hide,bumpScale:.025,roughness:.62});
+ const cushionProfile=[[0,-.8],[7.3,-.8],[7.8,-.5],[8,0],[7.8,.6],[7.1,.85],[0,.85]].map(([x,y])=>new THREE.Vector2(x,y));
+ const pipingMat=new THREE.MeshStandardMaterial({color:0x581915,roughness:.7});
  for(const z of [-24,26,76]){
-  const seat=mesh(new THREE.CylinderGeometry(8,8,1.8,20),panelMat,66,1.1,z,'30 inch stool seat');
+  mesh(new THREE.CylinderGeometry(8,8,.6,32),panelMat,66,.3,z,'Stool wooden seat base');
+  mesh(new THREE.LatheGeometry(cushionProfile,32),leatherMat,66,1.15,z,'30 inch stool red leather cushion');
+  const piping=mesh(new THREE.TorusGeometry(7.75,.08,6,32),pipingMat,66,1.7,z,'Leather cushion piping');piping.rotation.x=Math.PI/2;
   for(const [dx,dz] of [[-5,-5],[-5,5],[5,-5],[5,5]])mesh(new THREE.CylinderGeometry(.72,.95,28,8),trimMat,66+dx,-14,z+dz,'Stool leg');
   const foot=mesh(new THREE.TorusGeometry(6,.32,5,20),iron,66,-14,z,'Stool footrest');foot.rotation.x=Math.PI/2;
  }
@@ -62,6 +70,8 @@ export function addRoom(scene,floor,renderer){
  const under=mesh(new THREE.PlaneGeometry(48,286,1,12),shadowMat,0,-27.97,0,'Table contact shadow',-29);under.rotation.x=-Math.PI/2;
  for(const z of [-24,26,76]){const m=mesh(new THREE.PlaneGeometry(23,23),shadowMat,66,-27.96,z,'Stool contact shadow',-29);m.rotation.x=-Math.PI/2}
  // Reflections are captured from the modeled room, never a photographic backdrop.
- if(renderer.isWebGLRenderer){const probe=new THREE.WebGLCubeRenderTarget(128,{generateMipmaps:true,minFilter:THREE.LinearMipmapLinearFilter});const camera=new THREE.CubeCamera(.5,900,probe);camera.position.set(0,10,0);camera.update(renderer,scene);scene.environment=probe.texture;scene.environmentIntensity=.32}
+ if(renderer.isWebGLRenderer){const probe=new THREE.WebGLCubeRenderTarget(128,{generateMipmaps:true,minFilter:THREE.LinearMipmapLinearFilter});const camera=new THREE.CubeCamera(.5,900,probe);camera.position.set(0,10,0);refreshReflections=()=>{const previous=scene.environment;scene.environment=null;camera.update(renderer,scene);scene.environment=previous||probe.texture};refreshReflections();scene.environmentIntensity=.32}
+ let lastStain=-1;try{const saved=Number(localStorage.getItem('shuffleboard-floor-stain')??-1);if(Number.isInteger(saved)&&saved>=0&&saved<5)lastStain=saved}catch{}
+ group.userData.randomizeFloor=()=>{let stain=Math.floor(Math.random()*(lastStain<0?5:4));if(stain>=lastStain&&lastStain>=0)stain++;lastStain=stain;try{localStorage.setItem('shuffleboard-floor-stain',String(stain))}catch{}const old=floor.material.map;floor.material.map=oakFloor(renderer,stain);floor.material.needsUpdate=true;old.dispose();scene.userData.floorStain=stain;refreshReflections()};
  return group;
 }
