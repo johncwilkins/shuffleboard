@@ -1,7 +1,7 @@
 import * as THREE from './vendor/three.module.js';
 import {SoftwareRenderer} from './software-renderer.js';
 import {finishTable} from './table-finish.js';
-import {addRoom} from './room.js';
+import {addRoom} from './room.js?v=20261117-ship';
 import {trackEvent} from './analytics.js?v=20261117-live';
 const $=s=>document.getElementById(s), clamp=THREE.MathUtils.clamp, mix=THREE.MathUtils.lerp;
 document.querySelector('footer').prepend(document.querySelector('.scoreboard'));

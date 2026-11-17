@@ -54,9 +54,7 @@ export function addRoadsideBar(scene,floor,renderer){
   mesh(stoolGeometry,leather,56,1.15,z,'Red leather 30 inch stool cushion');
   mesh(new THREE.CylinderGeometry(8,8,.8,16),dark,56,0,z,'Stool wooden seat');
   for(const [dx,dz] of [[-5,-5],[-5,5],[5,-5],[5,5]])rod([56+dx*1.2,-28,z+dz*1.2],[56+dx,0,z+dz],.75,legWood,'Stool leg');
-  // Curved wooden backs face the bar, following the reference chairs.
-  box(1.3,3.5,16,48,15,z,oak,'Stool curved back rail');
-  for(const dz of [-6,0,6])rod([48,.5,z+dz],[48,14,z+dz],.45,legWood,'Stool back spindle');
+  // Backless stools keep the leather cushion and wooden base aligned.
   for(const dx of [-5,5])rod([56+dx,-15,z-5],[56+dx,-15,z+5],.42,legWood,'Stool lower rung');
  }
  // Backbar bottle shelves, with working-height space behind the counter.
@@ -88,8 +86,8 @@ export function addRoadsideBar(scene,floor,renderer){
  function wallArt(tex,w,h,x,y,z,name,emissive=false){box(w+2,h+2,1.6,x,y,z+1.3,black,name+' frame',-20);const mat=new THREE.MeshStandardMaterial({map:tex,roughness:emissive?.4:.85,...(emissive?{emissive:0xffffff,emissiveMap:tex,emissiveIntensity:.35}:{})});const m=mesh(new THREE.PlaneGeometry(w,h),mat,x,y,z,name,-19);m.rotation.y=Math.PI;return m}
  const sign=texture(768,192,(c,w,h)=>{c.fillStyle='#17231e';c.fillRect(0,0,w,h);c.strokeStyle='#aa8d51';c.lineWidth=6;c.strokeRect(10,10,w-20,h-20);c.textAlign='center';c.fillStyle='#dfc58c';c.font='bold 68px Georgia';c.fillText('ROADSIDE BAR',w/2,98);c.font='21px Georgia';c.fillText('COLD BEER  ·  GOOD COMPANY',w/2,146)});
  wallArt(sign,78,19.5,-28,76,211,'Roadside Bar carved sign');
- const tv=texture(512,288,(c,w,h)=>{c.fillStyle='#10191b';c.fillRect(0,0,w,h);c.fillStyle='#3b573d';c.fillRect(0,38,w,204);c.strokeStyle='#b4b9a3';c.lineWidth=2;for(let i=0;i<11;i++){c.beginPath();c.moveTo(i*52,38);c.lineTo(i*52,242);c.stroke()}c.strokeRect(0,64,w,148);for(let i=0;i<12;i++){c.fillStyle=i%2?'#e0cfb4':'#924537';c.fillRect(130+rnd()*240,80+rnd()*110,5,12)}c.fillStyle='#172b3d';c.fillRect(0,0,w,38);c.fillStyle='#dcd8cb';c.font='bold 20px Arial';c.fillText('HOME 14    AWAY 10    3RD',16,26);c.fillStyle='#18242b';c.fillRect(0,242,w,46);c.font='17px Arial';c.fillStyle='#b3c5cd';c.fillText('LIVE SPORTS     ·     ROADSIDE',17,272)});
- wallArt(tv,36,20.25,101,56,212,'Television football broadcast',true);
+ const ship=new THREE.TextureLoader().load(new URL('./photos/old-ship.jpg',import.meta.url).href,()=>{if(room.parent)refresh()});ship.colorSpace=THREE.SRGBColorSpace;ship.anisotropy=renderer.capabilities.getMaxAnisotropy();textures.add(ship);
+ wallArt(ship,36,20.25,101,56,212,'Antique sailing ship print');
  const clock=texture(256,256,(c,w,h)=>{c.fillStyle='#c4ae77';c.beginPath();c.arc(128,128,122,0,Math.PI*2);c.fill();c.strokeStyle='#483723';c.lineWidth=9;c.stroke();c.fillStyle='#362a21';c.textAlign='center';c.textBaseline='middle';c.font='23px Georgia';for(let i=1;i<=12;i++){const a=i*Math.PI/6;c.fillText(String(i),128+Math.sin(a)*91,128-Math.cos(a)*91)}c.strokeStyle='#30271e';c.lineWidth=5;c.beginPath();c.moveTo(128,128);c.lineTo(78,99);c.moveTo(128,128);c.lineTo(187,94);c.stroke()});
  mesh(new THREE.CylinderGeometry(11,11,1.5,32),brass,-119,56,212,'Brass wall clock rim',-20).rotation.x=Math.PI/2;
  const face=mesh(new THREE.CircleGeometry(10,32),new THREE.MeshStandardMaterial({map:clock,roughness:.85}),-119,56,210.9,'Clock face',-19);face.rotation.y=Math.PI;

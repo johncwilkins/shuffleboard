@@ -1,5 +1,5 @@
 import * as THREE from './vendor/three.module.js';
-import {addRoadsideBar} from './roadside-room.js';
+import {addRoadsideBar} from './roadside-room.js?v=20261117-ship';
 // Every dimension is in inches, matching the 20 x 252-inch playing surface.
 const ROOM={width:216,length:432,floor:-28,height:112};
 function random(seed){return()=>((seed=(seed*1664525+1013904223)>>>0)/4294967296)}

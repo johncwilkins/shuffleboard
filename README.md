@@ -17,7 +17,7 @@ The camera follows the puck and rises into an overhead scoring view. The table i
 
 ## Rooms
 
-Use the **Room** button and chooser below the controls to choose **Roadside Bar** or **Classic Room**. Roadside Bar is a modeled 24-by-36-foot neighborhood bar inspired by supplied reference photos, with dark beams, hanging pewter mugs, bottle shelves, brass draft hardware and foot rail, a sports television, and red leather stools. The ceiling fittings hide as the camera rises into scoring view. Classic Room retains the personal black-and-white boat photographs. Room choice is saved in this browser; switching rooms preserves scores, pucks, and turn. Both rooms vary the floor stain for each new game.
+Use the **Room** button and chooser below the controls to choose **Roadside Bar** or **Classic Room**. Roadside Bar is a modeled 24-by-36-foot neighborhood bar inspired by supplied reference photos, with dark beams, hanging pewter mugs, bottle shelves, brass draft hardware and foot rail, a framed antique sailing ship print, and backless red leather stools. The ceiling fittings hide as the camera rises into scoring view. Classic Room retains the personal black-and-white boat photographs. Room choice is saved in this browser; switching rooms preserves scores, pucks, and turn. Both rooms vary the floor stain for each new game.
 
 ## Analytics
 
