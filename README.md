@@ -15,6 +15,10 @@ Four pucks per side, alternating shots. Only the leading color scores; first to 
 
 The camera follows the puck and rises into an overhead scoring view. The table includes rounded wood rails, textured gutter lining, puck collisions, and gutter-wall containment. Desktop has a vintage slide scorer; phones keep the scoreboard with the bottom controls.
 
+## Rooms
+
+Use the **Room** selector below the controls to choose **Roadside Bar** or **Classic Room**. Roadside Bar is a modeled 24-by-36-foot neighborhood bar inspired by supplied reference photos, with dark beams, hanging pewter mugs, bottle shelves, brass draft hardware and foot rail, a sports television, and red leather stools. The ceiling fittings hide as the camera rises into scoring view. Classic Room retains the personal black-and-white boat photographs. Room choice is saved in this browser; switching rooms preserves scores, pucks, and turn. Both rooms vary the floor stain for each new game.
+
 ## Run locally
 
 From this directory:
@@ -32,7 +36,8 @@ This is a static site with no build step. Upload this directory to a static host
 ## Files
 
 - `index.html`, `style.css`: interface and responsive layout
-- `game.js`: input, physics, scoring, computer player, and cameras
+- `game.js`: input, physics, scoring, computer player, cameras, and room selection
+- `room.js`, `roadside-room.js`: modeled rooms and procedural materials
 - `table.glb`: custom table and puck model
 - `table-finish.js`: rounded woodwork and procedural materials
 - `software-renderer.js`: fallback for browsers without WebGL
