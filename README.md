@@ -21,7 +21,7 @@ Use the **Room** button and chooser below the controls to choose **Roadside Bar*
 
 ## Analytics
 
-GoatCounter hooks are installed for pageviews, game/practice starts, room changes, and human/computer wins. Set `goatcounterCode` in `analytics-config.js` to this game's verified GoatCounter site code (the subdomain before `.goatcounter.com`). It is intentionally blank until supplied; analytics sends nothing while unconfigured. Local previews are excluded. A blocked counter cannot interrupt gameplay, and no player names or detailed puck input are collected.
+GoatCounter is connected to `https://shuffleboard.goatcounter.com/count` for pageviews, game/practice starts, room changes, and human/computer wins. The site code lives in `analytics-config.js`. Local previews are excluded. A blocked counter cannot interrupt gameplay, and no player names or detailed puck input are collected.
 
 ## Run locally
 

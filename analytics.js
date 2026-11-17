@@ -1,4 +1,4 @@
-import {goatcounterCode} from './analytics-config.js';
+import {goatcounterCode} from './analytics-config.js?v=20261117-live';
 const enabled=/^[a-z0-9][a-z0-9-]*$/i.test(goatcounterCode)&&!['localhost','127.0.0.1',''].includes(location.hostname);
 const pending=[];
 let ready=false;

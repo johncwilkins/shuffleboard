@@ -2,7 +2,7 @@ import * as THREE from './vendor/three.module.js';
 import {SoftwareRenderer} from './software-renderer.js';
 import {finishTable} from './table-finish.js';
 import {addRoom} from './room.js';
-import {trackEvent} from './analytics.js';
+import {trackEvent} from './analytics.js?v=20261117-live';
 const $=s=>document.getElementById(s), clamp=THREE.MathUtils.clamp, mix=THREE.MathUtils.lerp;
 document.querySelector('footer').prepend(document.querySelector('.scoreboard'));
 for(let i=0;i<2;i++){const rail=$('rail'+i);for(let n=0;n<=21;n++){const tick=document.createElement('span');tick.className='score-tick';tick.style.left=(n/21*100)+'%';tick.textContent=n;rail.appendChild(tick)}}
